@@ -1,5 +1,15 @@
 ---
 
+- set_fact:
+    networks:
+      - { name: "net-hahl-vpn"   }
+      - { name: "net-hahl-vdi"   }
+      - { name: "net-hahl-apps"  }
+      - { name: "net-hahl-ocp"   }
+      - { name: "net-hahl-infra" }
+      - { name: "net-hahl-auth"  }
+
+
 
 - name: "network {{item.name}}"
   openstack.cloud.network:
@@ -7,11 +17,4 @@
     name: "{{item.name}}"
     mtu_size: 1500
     dns_domain: "hahl.id.au"
-  with_items:
-    - { name: "net-hahl-vpn"   }
-    - { name: "net-hahl-vdi"   }
-    - { name: "net-hahl-apps"  }
-    - { name: "net-hahl-ocp"   }
-    - { name: "net-hahl-infra" }
-    - { name: "net-hahl-auth"  }
-
+  with_items: "{{networks}}"
