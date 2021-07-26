@@ -1,0 +1,6 @@
+---
+cloud_init: |-
+  ""
+
+default_keypair: ""
+default_flavor: ""

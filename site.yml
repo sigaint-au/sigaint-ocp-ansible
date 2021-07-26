@@ -1,0 +1,4 @@
+---
+- hosts: localhost
+  tasks:
+    - include_tasks: "routers/rou-hahl-ext.yaml"

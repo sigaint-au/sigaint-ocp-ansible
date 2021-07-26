@@ -1,0 +1,34 @@
+---
+- openstack.cloud.router:
+    state: present
+    name: rou-hahl-ext
+    network: net-vlan_1300-os_wan
+    interfaces:
+      - net: net-hahl-auth
+        subnet: 172.16.17.0/27
+        portip: 172.16.17.1
+
+      - net: net-hahl-vpn
+        subnet: 172.16.17.32/27
+        portip: 172.16.17.33
+
+      - net: net-hahl-vdi
+        subnet: 172.16.17.64/27
+        portip: 172.16.17.65/27
+
+      - net: net-hahl-infra
+        subnet: 172.16.17.96/27
+        portip: 172.16.17.97
+
+      - net: net-hahl-ocp
+        subnet: 172.16.17.128/27
+        portip: 172.16.17.129
+
+      - net: net-hahl-apps
+        subnet: 172.16.17.160/27
+        portip: 172.16.17.161
+
+      - net: net-cust-smb
+        subnet: 192.168.1.0
+        portip: 192.168.1.1
+
