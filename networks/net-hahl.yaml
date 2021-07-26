@@ -39,3 +39,4 @@
     name: "{{item.subnet}}"
     cidr: "{{item.subnet}}"
     dns_nameservers: "{{nameservers}}"
+  with_items: "{{networks}}"
