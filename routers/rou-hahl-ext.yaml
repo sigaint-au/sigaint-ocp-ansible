@@ -1,5 +1,6 @@
 ---
-- openstack.cloud.router:
+- name: "router rou-hahl-ext" 
+  openstack.cloud.router:
     state: present
     name: rou-hahl-ext
     network: net-vlan_1300-os_wan
