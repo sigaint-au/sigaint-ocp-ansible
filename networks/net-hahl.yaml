@@ -1,20 +1,41 @@
 ---
 
 - set_fact:
+
+    # Quad9
+    nameservers:
+      - 9.9.9.9
+      - 149.112.112.112
+
     networks:
-      - { name: "net-hahl-vpn"   }
-      - { name: "net-hahl-vdi"   }
-      - { name: "net-hahl-apps"  }
-      - { name: "net-hahl-ocp"   }
-      - { name: "net-hahl-infra" }
-      - { name: "net-hahl-auth"  }
+      - name:   net-hahl-vpn
+        subnet: 172.16.17.32/27
 
+      - name:   net-hahl-vdi   
+        subnet: 172.16.17.64/27
 
+      - name:   net-hahl-apps
+        subnet: 172.16.17.160/27 
 
-- name: "network {{item.name}}"
-  openstack.cloud.network:
+      - name:   net-hahl-ocp   
+        subnet: 172.16.17.128/27
+
+      - name:   net-hahl-infra
+        subnet: 172.16.17.96/27
+
+      - name:   net-hahl-auth
+        subnet: 172.16.17.0/27
+
+- openstack.cloud.network:
     state: present
     name: "{{item.name}}"
     mtu_size: 1500
     dns_domain: "hahl.id.au"
   with_items: "{{networks}}"
+
+- openstack.cloud.subnet:
+    state: present
+    network_name: "{{item.name}}"
+    name: "{{item.subnet}}"
+    cidr: "{{item.subnet}}"
+    dns_nameservers: "{{nameservers}}"
