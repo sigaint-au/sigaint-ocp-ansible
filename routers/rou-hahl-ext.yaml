@@ -14,7 +14,7 @@
 
       - net: net-hahl-vdi
         subnet: 172.16.17.64/27
-        portip: 172.16.17.65/27
+        portip: 172.16.17.65
 
       - net: net-hahl-infra
         subnet: 172.16.17.96/27
@@ -29,6 +29,6 @@
         portip: 172.16.17.161
 
       - net: net-cust-smb
-        subnet: 192.168.1.0
+        subnet: 192.168.1.0/24
         portip: 192.168.1.1
 
