@@ -1,5 +1,6 @@
 ---
 - hosts: localhost
   tasks:
+    - include_tasks: "security_groups/internet.yaml"
     - include_tasks: "networks/net-hahl.yaml"
     - include_tasks: "routers/rou-hahl-ext.yaml"

@@ -1,0 +1,27 @@
+---
+
+- set_fact:
+    security_groups:
+      - name: "#internet"
+        description: Allow access to http/s and dns to quad9.
+        rules:
+          - { direction: "egress", protocol: tcp, port: 80,  remote_ip_prefix: "0.0.0.0/0",          description: "All HTTP"  }
+          - { direction: "egress", protocol: tcp, port: 443, remote_ip_prefix: "0.0.0.0/0",          description: "All HTTPS" }
+          - { direction: "egress", protocol: udp, port: 53,  remote_ip_prefix: "9.9.9.9/32",         description: "Quad9 DNS Primary UDP"   }
+          - { direction: "egress", protocol: udp, port: 53,  remote_ip_prefix: "149.112.112.112/32", description: "Quad9 DNS Secondary UDP" }
+          - { direction: "egress", protocol: udp, port: 123, remote_ip_prefix: "150.203.22.28/32",   description: "ntp2.anu.edu.au" }
+          - { direction: "egress", protocol: udp, port: 123, remote_ip_prefix: "150.203.1.10/32",    description: "ntp1.anu.edu.au" }
+
+- openstack.cloud.security_group:
+    state: present
+    name: "{{item.name}}"
+    description: "{{item.description}}"
+  with_items: "{{security_groups}}"
+
+- openstack.cloud.security_group_rule:
+    security_group: "{{item.0.name}}" 
+    protocol: "{{item.1.protocol}} | default(tcp)"
+    port_range_min: "{{ item.1.port }}"
+    port_range_max: "{{ item.1.port }}"
+    remote_ip_prefix: "{{item.1.remote_ip_prefix}}"
+  loop: "{{ security_groups | subelements('rules') }}"
