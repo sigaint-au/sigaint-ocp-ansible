@@ -5,10 +5,10 @@
       - name: "sg-allow_all"
         description: Allow access to everything.
         rules:
-          - { direction: "egress" , protocol: tcp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All TCP"  }
-          - { direction: "ingress", protocol: tcp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All TCP"  }
-          - { direction: "egress" , protocol: udp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All UDP"  }
-          - { direction: "ingress", protocol: udp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All UDP"  }
+          - { direction: "egress" , protocol: tcp, port_min: 1, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All TCP"  }
+          - { direction: "ingress", protocol: tcp, port_min: 1, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All TCP"  }
+          - { direction: "egress" , protocol: udp, port_min: 1, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All UDP"  }
+          - { direction: "ingress", protocol: udp, port_min: 1, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All UDP"  }
           - { direction: "egress" , protocol: udp, port_min: -1, port_max: -1,   remote_ip_prefix: "0.0.0.0/0", description: "All ICMP" }
           - { direction: "ingress", protocol: udp, port_min: -1, port_max: -1,   remote_ip_prefix: "0.0.0.0/0", description: "All ICMP" }
 
