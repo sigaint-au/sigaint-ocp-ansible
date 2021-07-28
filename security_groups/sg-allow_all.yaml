@@ -1,0 +1,27 @@
+---
+
+- set_fact:
+    security_groups:
+      - name: "sg-allow_all"
+        description: Allow access to everything.
+        rules:
+          - { direction: "egress" , protocol: tcp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All TCP"  }
+          - { direction: "ingress", protocol: tcp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All TCP"  }
+          - { direction: "egress" , protocol: udp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All UDP   }
+          - { direction: "ingress", protocol: udp, port_min: 0, port_max: 65535, remote_ip_prefix: "0.0.0.0/0", description: "All UDP"  }
+          - { direction: "egress" , protocol: udp, port_min: -1, port_max: -1,   remote_ip_prefix: "0.0.0.0/0", description: "All ICMP" }
+          - { direction: "ingress", protocol: udp, port_min: -1, port_max: -1,   remote_ip_prefix: "0.0.0.0/0", description: "All ICMP" }
+
+- openstack.cloud.security_group:
+    state: present
+    name: "{{item.name}}"
+    description: "{{item.description}}"
+  with_items: "{{security_groups}}"
+
+- openstack.cloud.security_group_rule:
+    security_group: "{{item.0.name}}" 
+    protocol: "{{item.1.protocol}} | default(tcp)"
+    port_range_min: "{{ item.1.port_min }}"
+    port_range_max: "{{ item.1.port_max }}"
+    remote_ip_prefix: "{{item.1.remote_ip_prefix}}"
+  loop: "{{ security_groups | subelements('rules') }}"
