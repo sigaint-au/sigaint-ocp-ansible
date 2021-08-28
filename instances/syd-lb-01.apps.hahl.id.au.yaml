@@ -9,6 +9,7 @@
     auto_ip: false
     flavor: "g.small"
     security_groups:
+      - "sg-allow_internet"
       - "sg-role-apps_lb"
       - "sg-role-ssh_server"
     nics:
