@@ -18,3 +18,5 @@
     - include_tasks: "ports/net-hahl-apps/syd-lb-01.apps.hahl.id.au_Port-1.yaml"
     - include_tasks: "ports/net-hahl-apps/syd-lb-02.apps.hahl.id.au_Port-1.yaml"
     - include_tasks: "ports/net-hahl-apps/syd-lb-vip.apps.hahl.id.au_Port-1.yaml"
+
+    - include_tasks: "instances""ports/net-hahl-apps/syd-lb-01.apps.hahl.id.au.yaml"

@@ -2,5 +2,6 @@
 cloud_init: |-
   ""
 
-default_keypair: ""
-default_flavor: ""
+default_keypair: "PGP_000610347224"
+default_flavor: "g.small"
+default_image: "Red Hat Enterprise Linux 8.2 (Ootpa)"
