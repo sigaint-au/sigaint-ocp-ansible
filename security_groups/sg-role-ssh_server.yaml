@@ -2,10 +2,14 @@
 
 - set_fact:
     security_groups:
+
+      # Dependency on ssh_client ensure it exists
+      - name: "sg-role-ssh_client"
+        rules: []
+
       - name: "sg-role-ssh_server"
-        description: Application loadbalancer.
+        description: SSH Server
         rules:
-          # Incoming 
           - { direction: "ingress", protocol: tcp, port: "22", remote_group: "sg-role-ssh_client", description: "Allow ssh from sg-role-ssh_client" }
 
 - openstack.cloud.security_group:
@@ -21,4 +25,4 @@
     port_range_max: "{{ item.1.port | default (omit) }}"
     remote_ip_prefix: "{{item.1.remote_ip_prefix | default(omit)}}"
     remote_group: "{{item.1.remote_group | default(omit)}}"
-  loop: "{{ security_groups | subelements('rules') }}"
+  loop: "{{ security_groups | subelements('rules') | default([]) }}"

@@ -2,10 +2,13 @@
 
 - set_fact:
     security_groups:
-      - name: "sg-role-client_server"
-        description: Application loadbalancer.
+      # Dependency on the server.
+      - name: "sg-role-ssh_server"
+        rules: []
+
+      - name: "sg-role-ssh_client"
+        description: SSH Clienet
         rules:
-          # Incoming 
           - { direction: "egress", protocol: tcp, port: "22", remote_group: "sg-role-ssh_server", description: "Allow ssh to sg-role-ssh_server" }
 
 - openstack.cloud.security_group:
@@ -21,4 +24,4 @@
     port_range_max: "{{ item.1.port | default (omit) }}"
     remote_ip_prefix: "{{item.1.remote_ip_prefix | default(omit)}}"
     remote_group: "{{item.1.remote_group | default(omit)}}"
-  loop: "{{ security_groups | subelements('rules') }}"
+  loop: "{{ security_groups | subelements('rules') | default([]) }}"
