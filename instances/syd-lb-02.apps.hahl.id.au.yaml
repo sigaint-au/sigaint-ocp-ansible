@@ -12,6 +12,7 @@
       - "sg-allow_internet"
       - "sg-role-apps_lb"
       - "sg-role-ssh_server"
+      - "sg-role-idm_client"
     nics:
       - "port-name=syd-lb-02.apps.hahl.id.au_Port-1"
     meta: "hostname=syd-lb-02.hahl.id.au,network=apps,role=loadbalancer"
