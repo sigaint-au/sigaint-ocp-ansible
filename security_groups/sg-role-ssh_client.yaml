@@ -14,7 +14,7 @@
 - openstack.cloud.security_group:
     state: present
     name: "{{item.name}}"
-    description: "{{item.description}}"
+    description: "{{item.description}} | default(omit)"
   with_items: "{{security_groups}}"
 
 - openstack.cloud.security_group_rule:
@@ -24,4 +24,4 @@
     port_range_max: "{{ item.1.port | default (omit) }}"
     remote_ip_prefix: "{{item.1.remote_ip_prefix | default(omit)}}"
     remote_group: "{{item.1.remote_group | default(omit)}}"
-  loop: "{{ security_groups | subelements('rules') | default([]) }}"
+  loop: "{{ security_groups | subelements('rules') }}"
