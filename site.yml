@@ -1,6 +1,9 @@
 ---
 - hosts: localhost
   tasks:
+
+    - include_vars: "config/defaults.yaml"
+
     ##
     # == Create security groups routers and networks.
     #
