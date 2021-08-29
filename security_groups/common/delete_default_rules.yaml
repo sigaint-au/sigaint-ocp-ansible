@@ -1,4 +1,8 @@
 ---
+
+- debug:
+    msg: "Deleting default rules"
+
 - openstack.cloud.security_group_rule:
     security_group: "{{item.name}}"
     protocol: any
