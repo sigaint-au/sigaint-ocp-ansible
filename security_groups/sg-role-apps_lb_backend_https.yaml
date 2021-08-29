@@ -15,7 +15,7 @@
 - openstack.cloud.security_group:
     state: present
     name: "{{item.name}}"
-    description: "{{item.description}}"
+    description: "{{item.description | default(omit)}}"
   with_items: "{{security_groups}}"
 
 - openstack.cloud.security_group_rule:
