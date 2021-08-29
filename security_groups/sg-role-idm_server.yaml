@@ -29,7 +29,7 @@
   with_items: "{{security_groups}}"
 
 # Delete defualt rules
-- import_tasks: "common/delete_default_rules.yaml"
+- include_tasks: "common/delete_default_rules.yaml"
   vars:
     security_groups: "{{security_groups}}"
 
