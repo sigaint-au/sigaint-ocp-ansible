@@ -1,7 +1,7 @@
 ---
 
 - debug:
-    msg: "START - Deleting default rules"
+    msg: "Deleting all default rules"
 
 - openstack.cloud.security_group_rule:
     security_group: "{{item.name}}"
@@ -26,4 +26,4 @@
   with_items: "{{security_groups}}"
 
 - debug:
-    msg: "END -Deleting default rules"
+    msg: "Finished deleting al ldefault rules"
