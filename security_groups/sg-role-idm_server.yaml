@@ -28,6 +28,9 @@
     description: "{{item.description | default(omit)}}"
   with_items: "{{security_groups}}"
 
+# Delete defualt rules
+- include_tasks: "common/delete_default_rules.yaml"
+
 - openstack.cloud.security_group_rule:
     security_group: "{{item.0.name}}" 
     protocol: "{{ item.1.protocol | default(tcp) }}"
