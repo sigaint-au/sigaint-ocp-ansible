@@ -2,12 +2,26 @@
 
 - set_fact:
     security_groups:
+      - name: "sg-role-apps_lb_backend_https"
+        rules: []
+
+      - name: "sg-role-apps_lb_backend_mc"
+        rules: []
+
       - name: "sg-role-apps_lb"
         description: Application loadbalancer.
         rules:
-          # Incoming 
+          # Incoming  HTTPS
           - { direction: "ingress", protocol: tcp, port: 80,   remote_ip_prefix: "0.0.0.0/0",  description: "All HTTP"  }
           - { direction: "ingress", protocol: tcp, port: 443,  remote_ip_prefix: "0.0.0.0/0",  description: "All HTTPS" }
+          - { direction: "egress",  protocol: tcp, port: 80,   remote_group: "sg-role-apps_lb_backend_https", description: "https to backend" }
+          - { direction: "egress",  protocol: tcp, port: 443,  remote_group: "sg-role-apps_lb_backend_https", description: "https to backend" }
+
+          # Minecraft
+          - { direction: "ingress", protocol: tcp, port: 25565,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }
+          - { direction: "ingress", protocol: udp, port: 19132,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }
+          - { direction: "egress", protocol: tcp, port: 25565, remote_group: "sg-role-apps_lb_backend_mc", description: "Minecraft" }
+          - { direction: "egress", protocol: udp, port: 19132, remote_group: "sg-role-apps_lb_backend_mc", description: "Minecraft" }
 
           # Keepalived VRRP
           - { direction: "ingress", protocol: 112, remote_group: "sg-role-apps_lb", description: "VRRP" }
@@ -15,7 +29,7 @@
 - openstack.cloud.security_group:
     state: present
     name: "{{item.name}}"
-    description: "{{item.description}}"
+    description: "{{item.description | default(omit)}}"
   with_items: "{{security_groups}}"
 
 - openstack.cloud.security_group_rule:
