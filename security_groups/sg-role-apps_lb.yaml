@@ -32,6 +32,8 @@
 
 # Delet edefualt rules
 - import_tasks: "common/delete_default_rules.yaml"
+  vars:
+    security_groups: "{{security_groups}}"
 
 ## Apply Rules
 - openstack.cloud.security_group_rule:
