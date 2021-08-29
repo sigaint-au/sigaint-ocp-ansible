@@ -6,4 +6,4 @@
     fixed_ips:
       - ip_address: "172.16.17.172"
     allowed_address_pairs:
-      - ip_address: "172.16.16.170"
+      - ip_address: "172.16.16.160/27"
