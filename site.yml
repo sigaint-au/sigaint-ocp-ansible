@@ -29,5 +29,9 @@
     - include_tasks: "ports/net-hahl-apps/syd-lb-02.apps.hahl.id.au_Port-1.yaml"
     - include_tasks: "ports/net-hahl-apps/syd-lb-vip.apps.hahl.id.au_Port-1.yaml"
 
+    # Loadbalancer
     - include_tasks: "instances/syd-lb-01.apps.hahl.id.au.yaml"
     - include_tasks: "instances/syd-lb-02.apps.hahl.id.au.yaml"
+
+    # Minecraft
+    - include_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
