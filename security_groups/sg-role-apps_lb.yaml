@@ -31,7 +31,7 @@
   with_items: "{{security_groups}}"
 
 # Delet edefualt rules
-- include_tasks: "common/delete_default_rules.yaml"
+- import_tasks: "common/delete_default_rules.yaml"
 
 ## Apply Rules
 - openstack.cloud.security_group_rule:
