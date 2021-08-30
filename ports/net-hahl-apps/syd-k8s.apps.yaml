@@ -5,10 +5,10 @@
     network: net-hahl-apps
     fixed_ips:
       - ip_address: "{{item.ip}}"
-    with_items:
-      - { name: "syd-k8s-master-01.apps.hahl.id.au", ip: "172.16.17.190" }
-      - { name: "syd-k8s-master-02.apps.hahl.id.au", ip: "172.16.17.191" }
-      - { name: "syd-k8s-master-03.apps.hahl.id.au", ip: "172.16.17.192" }
-      - { name: "syd-k8s-worker-01.apps.hahl.id.au", ip: "172.16.17.193" }
-      - { name: "syd-k8s-worker-02.apps.hahl.id.au", ip: "172.16.17.194" }
-      - { name: "syd-k8s-worker-03.apps.hahl.id.au", ip: "172.16.17.195" }
+  with_items:
+    - { name: "syd-k8s-master-01.apps.hahl.id.au", ip: "172.16.17.190" }
+    - { name: "syd-k8s-master-02.apps.hahl.id.au", ip: "172.16.17.191" }
+    - { name: "syd-k8s-master-03.apps.hahl.id.au", ip: "172.16.17.192" }
+    - { name: "syd-k8s-worker-01.apps.hahl.id.au", ip: "172.16.17.193" }
+    - { name: "syd-k8s-worker-02.apps.hahl.id.au", ip: "172.16.17.194" }
+    - { name: "syd-k8s-worker-03.apps.hahl.id.au", ip: "172.16.17.195" }
