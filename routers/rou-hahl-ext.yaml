@@ -17,7 +17,7 @@
         subnet: 172.16.17.64/27
         portip: 172.16.17.65
 
-      - net: net-hahl-infra
+      - net: net-hahl-k8s
         subnet: 172.16.17.96/27
         portip: 172.16.17.97
 

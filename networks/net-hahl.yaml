@@ -20,7 +20,7 @@
       - name:   net-hahl-ocp   
         subnet: 172.16.17.128/27
 
-      - name:   net-hahl-infra
+      - name:   net-hahl-k8s
         subnet: 172.16.17.96/27
 
       - name:   net-hahl-auth
