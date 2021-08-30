@@ -1,0 +1,49 @@
+---
+
+- set_fact:
+    security_groups:
+      - name: "sg-role-k8s_master"
+        rules: []
+
+      - name: "sg-role-k8s_client"
+        rules: []
+
+      - name: "sg-role-k8s_worker"
+        description: Kubernetes Master Node
+        rules:
+          - { direction: "ingress", protocol: tcp, port: 2380, remote_group: "sg-role-k8s_master",  description: "etcd peers" }
+
+          - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_master",  description: "kube-apiserver" }
+          - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_worker",  description: "kube-apiserver" }
+          - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_client",  description: "kube-apiserver" }
+
+
+          - { direction: "ingress", protocol: udp, port: 4789, remote_group: "sg-role-k8s_worker",  description: "calico" }
+          - { direction: "ingress", protocol: tcp, port: 179, remote_group: "sg-role-k8s_worker",  description: "kube-router" }
+
+          - { direction: "ingress", protocol: tcp, port: 10250, remote_group: "sg-role-k8s_master", description: "kubelet" }
+          - { direction: "ingress", protocol: tcp, port: 10250, remote_group: "sg-role-k8s_worker", description: "kubelet" }
+
+          - { direction: "ingress", protocol: tcp, port: 9443, remote_group:  "sg-role-k8s_master", description: "k0s-api" }
+
+          - { direction: "ingress", protocol: tcp, port: 8132, remote_group:  "sg-role-k8s_worker", description: "konectivity server" }
+          - { direction: "ingress", protocol: tcp, port: 8133, remote_group:  "sg-role-k8s_worker", description: "konectivity server" }
+
+
+- openstack.cloud.security_group:
+    state: present
+    name: "{{item.name}}"
+    description: "{{item.description | default(omit)}}"
+  with_items: "{{security_groups}}"
+
+# Delete defualt rules
+- include_tasks: "common/delete_default_rules.yaml"
+
+- openstack.cloud.security_group_rule:
+    security_group: "{{item.0.name}}" 
+    protocol: "{{ item.1.protocol | default(tcp) }}"
+    port_range_min: "{{ item.1.port | default(omit)}}"
+    port_range_max: "{{ item.1.port | default (omit) }}"
+    remote_ip_prefix: "{{item.1.remote_ip_prefix | default(omit)}}"
+    remote_group: "{{item.1.remote_group | default(omit)}}"
+  loop: "{{ security_groups | subelements('rules')  }}"

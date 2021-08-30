@@ -26,6 +26,13 @@
     - include_tasks: "security_groups/sg-role-apps_lb_backend_https.yaml"
     - include_tasks: "security_groups/sg-role-apps_lb_backend_mc.yaml"
 
+    # Kubes
+
+    - include_tasks: "security_groups/sg-role-k8s_client.yaml"
+    - include_tasks: "security_groups/sg-role-k8s_worker.yaml"
+    - include_tasks: "security_groups/sg-role-k8s_master.yaml"
+    - include_tasks: "ports/net-hahl-apps/syd-k8s.apps.yaml"
+
     # Loadbalancer
     - include_tasks: "ports/net-hahl-apps/syd-lb-vip.apps.hahl.id.au_Port-1.yaml"
 
