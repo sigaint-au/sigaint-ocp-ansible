@@ -16,7 +16,7 @@
           - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_master",  description: "kube-apiserver" }
           - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_worker",  description: "kube-apiserver" }
           - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_client",  description: "kube-apiserver" }
-
+          - { direction: "egress",  protocol: tcp, port: 6443, remote_group: "sg-role-apps_lb",  description: "kube-apiserver" }
 
           - { direction: "ingress", protocol: udp, port: 4789, remote_group: "sg-role-k8s_worker",  description: "calico" }
           - { direction: "ingress", protocol: tcp, port: 179, remote_group: "sg-role-k8s_worker",  description: "kube-router" }
@@ -25,6 +25,8 @@
           - { direction: "ingress", protocol: tcp, port: 10250, remote_group: "sg-role-k8s_worker", description: "kubelet" }
 
           - { direction: "ingress", protocol: tcp, port: 9443, remote_group:  "sg-role-k8s_master", description: "k0s-api" }
+          - { direction: "egress",  protocol: tcp, port: 9443, remote_group:  "sg-role-apps_lb",  description: "k0s-api" }
+
 
           - { direction: "ingress", protocol: tcp, port: 8132, remote_group:  "sg-role-k8s_worker", description: "konectivity server" }
           - { direction: "ingress", protocol: tcp, port: 8133, remote_group:  "sg-role-k8s_worker", description: "konectivity server" }

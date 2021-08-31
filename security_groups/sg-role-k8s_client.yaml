@@ -11,7 +11,7 @@
       - name: "sg-role-k8s_client"
         description: Kubernetes Master Node
         rules:
-          - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_master",  description: "kube-apiserver" }
+          - { direction: "egress", protocol: tcp, port: 6443, remote_group: "sg-role-k8s_master",  description: "kube-apiserver" }
 
 - openstack.cloud.security_group:
     state: present
