@@ -7,38 +7,63 @@
     ##
     # == Create security groups routers and networks.
     #
-    - include_tasks: "security_groups/sg-allow_internet.yaml"
-    - include_tasks: "security_groups/sg-allow_all.yaml"
 
-    - include_tasks: "security_groups/sg-role-ssh_client.yaml"
-    - include_tasks: "security_groups/sg-role-ssh_server.yaml"
+    - block:
+        - include_tasks: "networks/net-hahl.yaml"
+      tags:
+        - "networks"
 
-    - include_tasks: "security_groups/sg-role-idm_client.yaml"
-    - include_tasks: "security_groups/sg-role-idm_server.yaml"
-
-    - include_tasks: "networks/net-hahl.yaml"
-    - include_tasks: "routers/rou-hahl-ext.yaml"
+    - block:
+        - include_tasks: "routers/rou-hahl-ext.yaml"
+      tags:
+        - "routers"
 
     ## 
     # == Create resources for Applications
     #
-    - include_tasks: "security_groups/sg-role-apps_lb.yaml"
-    - include_tasks: "security_groups/sg-role-apps_lb_backend_https.yaml"
-    - include_tasks: "security_groups/sg-role-apps_lb_backend_mc.yaml"
+    - block:
+        # Default internet access
+        - include_tasks: "security_groups/sg-allow_internet.yaml"
+        - include_tasks: "security_groups/sg-allow_all.yaml"
 
-    # Kubes
+        # SSH Access
+        - include_tasks: "security_groups/sg-role-ssh_client.yaml"
+        - include_tasks: "security_groups/sg-role-ssh_server.yaml"
 
-    - include_tasks: "security_groups/sg-role-k8s_client.yaml"
-    - include_tasks: "security_groups/sg-role-k8s_worker.yaml"
-    - include_tasks: "security_groups/sg-role-k8s_master.yaml"
-    - include_tasks: "ports/net-hahl-k8s/grp-k8s.yaml"
-    - include_tasks: "volumes/grp-k8s.yaml"
-    - include_tasks: "instances/grp-k8s.yaml"
+        # IdM Client and server
+        - include_tasks: "security_groups/sg-role-idm_client.yaml"
+        - include_tasks: "security_groups/sg-role-idm_server.yaml"
 
-    # Loadbalancer
-    - include_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
-    - include_tasks: "instances/grp-apps-lb.yaml"
+        # Load Balancer Security Groups
+        - include_tasks: "security_groups/sg-role-apps_lb.yaml"
+        - include_tasks: "security_groups/sg-role-apps_lb_backend_https.yaml"
+        - include_tasks: "security_groups/sg-role-apps_lb_backend_mc.yaml"
 
-    # Minecraft
-    - include_tasks: "ports/net-hahl-apps/syd-mc-01.apps.hahl.id.au_Port-1.yaml"
-    - include_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
+        # Kubernetes
+        - include_tasks: "security_groups/sg-role-k8s_client.yaml"
+        - include_tasks: "security_groups/sg-role-k8s_worker.yaml"
+        - include_tasks: "security_groups/sg-role-k8s_master.yaml"
+      tags:
+        - "security_groups"
+
+    # Ports
+    - block:
+        - include_tasks: "ports/net-hahl-k8s/grp-k8s.yaml"
+        - include_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
+        - include_tasks: "ports/net-hahl-apps/syd-mc-01.apps.hahl.id.au_Port-1.yaml"
+      tags:
+        - "ports"
+
+    # Volumes
+    - block:
+        - include_tasks: "volumes/grp-k8s.yaml"
+      tags:
+        - "volumes"
+
+    # Instances
+    - block:
+        - include_tasks: "instances/grp-k8s.yaml"
+        - include_tasks: "instances/grp-apps-lb.yaml"
+        - include_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
+      tags:
+        - "instances"
