@@ -1,6 +1,24 @@
 ---
 -  openstack.cloud.server:
     state: present
+    name: syd-lb-01.apps.hahl.id.au
+    image: "{{default_image}}"
+    boot_from_volume: true
+    volume_size: 25
+    key_name: "{{default_keypair}}"
+    auto_ip: false
+    flavor: "g.small"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-apps_lb"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+    nics:
+      - "port-name=syd-lb-01.apps.hahl.id.au_Port-1"
+    meta: "hostname=syd-lb-01.hahl.id.au,network=apps,role=loadbalancer"
+
+-  openstack.cloud.server:
+    state: present
     name: syd-lb-02.apps.hahl.id.au
     image: "{{default_image}}"
     boot_from_volume: true
