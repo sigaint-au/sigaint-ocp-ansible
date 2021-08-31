@@ -33,6 +33,7 @@
     - include_tasks: "security_groups/sg-role-k8s_master.yaml"
     - include_tasks: "ports/net-hahl-k8s/grp-k8s.yaml"
     - include_tasks: "volumes/grp-k8s.yaml"
+    - include_tasks: "instances/grp-k8s.yaml"
 
     # Loadbalancer
     - include_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
