@@ -1,0 +1,51 @@
+---
+
+- set_fact:
+    masters:
+      - { name: "syd-master-01.k8s.hahl.id.au" }
+      - { name: "syd-master-02.k8s.hahl.id.au" }
+      - { name: "syd-master-03.k8s.hahl.id.au" }
+    workers:
+      - { name: "syd-worker-01.k8s.hahl.id.au" }
+      - { name: "syd-worker-02.k8s.hahl.id.au" }
+      - { name: "syd-worker-03.k8s.hahl.id.au" }
+
+- openstack.cloud.server:
+    state: present
+    name: "{{item.name}}"
+    image: "{{default_image}}"
+    boot_from_volume: true
+    volume_size: 25
+    key_name: "{{default_keypair}}"
+    auto_ip: false
+    flavor: "g.small"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-k8s_master"
+    nics:
+      - "port-name={{item.name}}_Port-1"
+    meta: "hostname={{item.name}},network=k8s,role=kubernetes"
+  with_items: "{{masters}}"
+
+- openstack.cloud.server:
+    state: present
+    name: "{{item.name}}"
+    image: "{{default_image}}"
+    boot_from_volume: true
+    volume_size: 50
+    key_name: "{{default_keypair}}"
+    auto_ip: false
+    flavor: "m.large"
+    volumes:
+      - "{{item.name}}_Ceph_Disk-1"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-k8s_worker"
+    nics:
+      - "port-name={{item.name}}_Port-1"
+    meta: "hostname={{item.name}},network=k8s,role=kubernetes"
+  with_items: "{{workers}}"
