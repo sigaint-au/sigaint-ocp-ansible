@@ -24,6 +24,7 @@
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
       - "sg-role-k8s_master"
+      - "sg-role-k8s_client"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
@@ -45,6 +46,7 @@
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
       - "sg-role-k8s_worker"
+      - "sg-role-k8s_client"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
