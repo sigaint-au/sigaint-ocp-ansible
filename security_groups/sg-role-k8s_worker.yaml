@@ -13,7 +13,7 @@
         rules:
           - { direction: "ingress", protocol: any, remote_group: "sg-role-k8s_master",  description: "allow worker to connect to everyone" }
           - { direction: "ingress", protocol: any, remote_group: "sg-role-k8s_worker",  description: "allow worker to connect to everyone" }
-          - { direction: "ingress", protocol: tcp, remote_group: "sg-role-k8s_client",  description: "allow client to unauth api" }
+          - { direction: "ingress", protocol: tcp, port: "10250", remote_group: "sg-role-k8s_client",  description: "allow client to unauth api" }
 
 
 - openstack.cloud.security_group:
