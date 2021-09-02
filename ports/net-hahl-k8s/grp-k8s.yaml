@@ -3,6 +3,8 @@
     state: present
     name: "{{item.name}}_Port-1"
     network: net-hahl-k8s
+    allowed_address_pairs:
+      - ip_address: "172.16.17.96/27"
     fixed_ips:
       - ip_address: "{{item.ip}}"
   with_items:
