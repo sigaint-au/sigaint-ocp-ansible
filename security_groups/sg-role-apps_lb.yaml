@@ -29,8 +29,6 @@
           # Konnectivity API
           - { direction: "ingress", protocol: tcp, port: 8132, remote_group: "sg-role-k8s_master", description: "k0s-api" }
           - { direction: "egress",  protocol: tcp, port: 8132, remote_group: "sg-role-k8s_master", description: "k0s-api" }
-          - { direction: "ingress", protocol: tcp, port: 8133, remote_group: "sg-role-k8s_master", description: "k0s-api" }
-          - { direction: "egress",  protocol: tcp, port: 8133, remote_group: "sg-role-k8s_master", description: "k0s-api" }
 
           # Minecraft
           - { direction: "ingress", protocol: tcp, port: 25565,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }
