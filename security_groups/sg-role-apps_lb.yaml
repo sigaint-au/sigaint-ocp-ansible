@@ -19,11 +19,8 @@
           - { direction: "ingress",  protocol: tcp, port: 6443, remote_ip_prefix: "0.0.0.0/0", description: "k8s-api" }
 
           # k0s API
-          - { direction: "ingress", protocol: tcp, port: 9443, remote_group: "sg-role-k8s_master", description: "k0s-api" }
-          - { direction: "ingress", protocol: tcp, port: 9443, remote_group: "sg-role-k8s_worker", description: "k0s-api" }
-
-          # Konnectivity API
-          - { direction: "ingress", protocol: tcp, port: 8132, remote_group: "sg-role-k8s_master", description: "k0s-api" }
+          - { direction: "ingress", protocol: tcp, port: 9345, remote_group: "sg-role-k8s_master", description: "rke2-join" }
+          - { direction: "ingress", protocol: tcp, port: 9345, remote_group: "sg-role-k8s_worker", description: "rke2-join" }
 
           # Minecraft
           - { direction: "ingress", protocol: tcp, port: 25565,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }
