@@ -18,7 +18,7 @@
     volume_size: 25
     key_name: "{{default_keypair}}"
     auto_ip: false
-    flavor: "g.small"
+    flavor: "g.large"
     security_groups:
       - "sg-allow_internet"
       - "sg-role-ssh_server"

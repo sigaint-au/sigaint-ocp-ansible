@@ -18,10 +18,6 @@
           # Kubernetes API
           - { direction: "ingress",  protocol: tcp, port: 6443, remote_ip_prefix: "0.0.0.0/0", description: "k8s-api" }
 
-          # k0s API
-          - { direction: "ingress", protocol: tcp, port: 9345, remote_group: "sg-role-k8s_master", description: "rke2-join" }
-          - { direction: "ingress", protocol: tcp, port: 9345, remote_group: "sg-role-k8s_worker", description: "rke2-join" }
-
           # Minecraft
           - { direction: "ingress", protocol: tcp, port: 25565,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }
 
