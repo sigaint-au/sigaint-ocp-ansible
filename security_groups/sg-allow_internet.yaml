@@ -26,7 +26,6 @@
 - include_tasks: "common/delete_default_rules.yaml"
 
 - openstack.cloud.security_group_rule:
-    description: "{{item.0.description }}"
     security_group: "{{item.0.name}}" 
     direction: "{{item.1.direction}}" 
     protocol: "{{ item.1.protocol | default(tcp) }}"
