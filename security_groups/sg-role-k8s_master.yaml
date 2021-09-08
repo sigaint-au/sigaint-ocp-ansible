@@ -14,7 +14,10 @@
           - { direction: "ingress", protocol: tcp, port: 6443, remote_group: "sg-role-apps_lb",  description: "k8s-api" }
 
           - { direction: "ingress", protocol: any, remote_group: "sg-role-k8s_master",  description: "allow master to connect to everyone" }
+          - { direction: "egress",  protocol: any, remote_group: "sg-role-k8s_master",  description: "allow master to connect to everyone" }
+
           - { direction: "ingress", protocol: any, remote_group: "sg-role-k8s_worker",  description: "allow master to connect to everyone" }
+          - { direction: "egress",  protocol: any, remote_group: "sg-role-k8s_worker",  description: "allow master to connect to everyone" }
 
 - openstack.cloud.security_group:
     state: present
