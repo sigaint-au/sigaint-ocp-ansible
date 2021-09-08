@@ -4,6 +4,8 @@
     security_groups:
       - name: "sg-role-apps_lb_backend_https"
         rules: []
+      - name: "sg-role-k8s_master"
+        rules: []
 
       - name: "sg-role-apps_lb_backend_mc"
         rules: []
@@ -13,18 +15,21 @@
         rules:
           # Incoming  HTTPS
           - { direction: "ingress", protocol: tcp, port: 80,   remote_ip_prefix: "0.0.0.0/0",  description: "All HTTP"  }
+          - { direction: "egress",  protocol: tcp, port: 80,   remote_group: "sg-role-apps_lb_backend_https",  description: "All HTTP"  }
+
           - { direction: "ingress", protocol: tcp, port: 443,  remote_ip_prefix: "0.0.0.0/0",  description: "All HTTPS" }
+          - { direction: "egress",  protocol: tcp, port: 443,  remote_group: "sg-role-apps_lb_backend_https",  description: "All HTTP"  }
 
           # Kubernetes API
-          - { direction: "ingress",  protocol: tcp, port: 6443, remote_ip_prefix: "0.0.0.0/0", description: "k8s-api" }
+          - { direction: "ingress",  protocol: tcp, port: 6443, remote_ip_prefix: "0.0.0.0/0",      description: "k8s-api" }
+          - { direction: "egress",   protocol: tcp, port: 6443, remote_group: "sg-role-k8s_master", description: "k8s-api" }
 
           # Minecraft
           - { direction: "ingress", protocol: tcp, port: 25565,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }
+          - { direction: "egress", protocol: tcp, port: 25565,  remote_group: "sg-role-apps_lb_backend_mc",  description: "Minecraft" }
 
-          # Keepalived VRRP
+          # Keepalived VRRP / HAProxy Stats
           - { direction: "ingress", protocol: 112, remote_group: "sg-role-apps_lb", description: "VRRP" }
-
-          # HAProxy Stats
           - { direction: "ingress", protocol: tcp, port: 9000,   remote_ip_prefix: "0.0.0.0/0",  description: "HAProxy Stats"  }
 
 - openstack.cloud.security_group:
