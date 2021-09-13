@@ -25,6 +25,7 @@
         # Default internet access
         - include_tasks: "security_groups/sg-allow_internet.yaml"
         - include_tasks: "security_groups/sg-allow_all.yaml"
+        - include_tasks: "security_groups/sg-role-egress_email.yaml"
 
         # SSH Access
         - include_tasks: "security_groups/sg-role-ssh_client.yaml"

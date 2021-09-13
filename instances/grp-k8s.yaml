@@ -44,6 +44,7 @@
       - "{{item.name}}_Ceph_Disk-1"
     security_groups:
       - "sg-allow_internet"
+      - "sg-role_egress_email"
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
       - "sg-role-k8s_worker"
