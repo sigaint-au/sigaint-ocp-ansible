@@ -52,6 +52,7 @@
         - include_tasks: "ports/net-hahl-k8s/grp-k8s.yaml"
         - include_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
         - include_tasks: "ports/net-hahl-apps/syd-mc-01.apps.hahl.id.au_Port-1.yaml"
+        - include_tasks: "ports/net-hahl-apps/syd-matrix-01.apps.hahl.id.au_Port-1.yaml"
       tags:
         - "ports"
 
@@ -66,5 +67,6 @@
         - include_tasks: "instances/grp-k8s.yaml"
         - include_tasks: "instances/grp-apps-lb.yaml"
         - include_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
+        - include_tasks: "instances/syd-matrix-01.apps.hahl.id.au.yaml"
       tags:
         - "instances"

@@ -1,0 +1,7 @@
+---
+- openstack.cloud.port:
+    state: present
+    name: syd-matrix-01.apps.hahl.id.au_Port-1
+    network: net-hahl-apps
+    fixed_ips:
+      - ip_address: "172.16.17.165"
