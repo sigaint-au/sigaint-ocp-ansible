@@ -44,6 +44,10 @@
         - include_tasks: "security_groups/sg-role-k8s_client.yaml"
         - include_tasks: "security_groups/sg-role-k8s_worker.yaml"
         - include_tasks: "security_groups/sg-role-k8s_master.yaml"
+        
+        # Prometheus
+        - include_tasks: "security_groups/sg-role-prometheus.yaml"
+        - include_tasks: "security_groups/sg-role-node_exporter.yaml"
       tags:
         - "security_groups"
 

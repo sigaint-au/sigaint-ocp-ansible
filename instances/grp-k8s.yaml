@@ -45,6 +45,7 @@
     security_groups:
       - "sg-allow_internet"
       - "sg-role_egress_email"
+      - "sg-role-prometheus"
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
       - "sg-role-k8s_worker"
