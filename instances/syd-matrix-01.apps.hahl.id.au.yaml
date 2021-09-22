@@ -12,6 +12,7 @@
       - "sg-allow_internet"
       - "sg-role-apps_lb_backend_https"
       - "sg-role-ssh_server"
+      - "sg-role-node_exporter"
       - "sg-role-idm_client"
     nics:
       - "port-name=syd-matrix-01.apps.hahl.id.au_Port-1"
