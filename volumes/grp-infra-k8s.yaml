@@ -4,6 +4,6 @@
     size: 200
     display_name: "{{item.name}}_Ceph_Disk-1"
   with_items:
-    - { name: "syd-worker-01.k8s.hahl.id.au" }
-    - { name: "syd-worker-02.k8s.hahl.id.au" }
-    - { name: "syd-worker-03.k8s.hahl.id.au" }
+    - { name: "syd-worker-01.infra.hahl.id.au" }
+    - { name: "syd-worker-02.infra.hahl.id.au" }
+    - { name: "syd-worker-03.infra.hahl.id.au" }

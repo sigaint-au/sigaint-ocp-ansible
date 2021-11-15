@@ -10,9 +10,9 @@
     fixed_ips:
       - ip_address: "{{item.ip}}"
   with_items:
-    - { name: "syd-master-01.k8s.hahl.id.au", ip: "172.16.17.100" }
-    - { name: "syd-master-02.k8s.hahl.id.au", ip: "172.16.17.101" }
-    - { name: "syd-master-03.k8s.hahl.id.au", ip: "172.16.17.102" }
-    - { name: "syd-worker-01.k8s.hahl.id.au", ip: "172.16.17.103" }
-    - { name: "syd-worker-02.k8s.hahl.id.au", ip: "172.16.17.104" }
-    - { name: "syd-worker-03.k8s.hahl.id.au", ip: "172.16.17.105" }
+    - { name: "syd-master-01.infra.hahl.id.au", ip: "172.16.17.100" }
+    - { name: "syd-master-02.infra.hahl.id.au", ip: "172.16.17.101" }
+    - { name: "syd-master-03.infra.hahl.id.au", ip: "172.16.17.102" }
+    - { name: "syd-worker-01.infra.hahl.id.au", ip: "172.16.17.103" }
+    - { name: "syd-worker-02.infra.hahl.id.au", ip: "172.16.17.104" }
+    - { name: "syd-worker-03.infra.hahl.id.au", ip: "172.16.17.105" }

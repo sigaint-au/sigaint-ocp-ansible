@@ -13,12 +13,12 @@
 - openstack.cloud.server:
     state: present
     name: "{{item.name}}"
-    image: "{{default_image}}"
+    image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
-    volume_size: 25
-    key_name: "{{default_keypair}}"
+    volume_size: 120
+    key_name: "openshift-aio"
     auto_ip: false
-    flavor: "g.large"
+    flavor: "okd.node"
     security_groups:
       - "sg-allow_internet"
       - "sg-role-ssh_server"
@@ -34,12 +34,12 @@
 - openstack.cloud.server:
     state: present
     name: "{{item.name}}"
-    image: "{{default_image}}"
+    image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
-    volume_size: 50
-    key_name: "{{default_keypair}}"
+    volume_size: 120
+    key_name: "openshift-aio"
     auto_ip: false
-    flavor: "m.large"
+    flavor: "okd.worker"
     volumes:
       - "{{item.name}}_Ceph_Disk-1"
     security_groups:
