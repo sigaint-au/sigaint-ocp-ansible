@@ -53,7 +53,7 @@
 
     # Ports
     - block:
-        - include_tasks: "ports/net-hahl-k8s/grp-k8s.yaml"
+        - include_tasks: "ports/net-hahl-k8s/grp-infra-k8s.yaml"
         - include_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
         - include_tasks: "ports/net-hahl-apps/syd-mc-01.apps.hahl.id.au_Port-1.yaml"
         - include_tasks: "ports/net-hahl-apps/syd-matrix-01.apps.hahl.id.au_Port-1.yaml"
@@ -62,13 +62,13 @@
 
     # Volumes
     - block:
-        - include_tasks: "volumes/grp-k8s.yaml"
+        - include_tasks: "volumes/grp-infra-k8s.yaml"
       tags:
         - "volumes"
 
     # Instances
     - block:
-        - include_tasks: "instances/grp-k8s.yaml"
+        - include_tasks: "instances/grp-infra-k8s.yaml"
         - include_tasks: "instances/grp-apps-lb.yaml"
         - include_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
         - include_tasks: "instances/syd-matrix-01.apps.hahl.id.au.yaml"

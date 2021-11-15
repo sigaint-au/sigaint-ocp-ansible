@@ -2,13 +2,13 @@
 
 - set_fact:
     masters:
-      - { name: "syd-master-01.k8s.hahl.id.au" }
-      - { name: "syd-master-02.k8s.hahl.id.au" }
-      - { name: "syd-master-03.k8s.hahl.id.au" }
+      - { name: "syd-master-01.infra.hahl.id.au" }
+      - { name: "syd-master-02.infra.hahl.id.au" }
+      - { name: "syd-master-03.infra.hahl.id.au" }
     workers:
-      - { name: "syd-worker-01.k8s.hahl.id.au" }
-      - { name: "syd-worker-02.k8s.hahl.id.au" }
-      - { name: "syd-worker-03.k8s.hahl.id.au" }
+      - { name: "syd-worker-01.infra.hahl.id.au" }
+      - { name: "syd-worker-02.infra.hahl.id.au" }
+      - { name: "syd-worker-03.infra.hahl.id.au" }
 
 - openstack.cloud.server:
     state: present
@@ -53,5 +53,5 @@
       - "sg-role-apps_lb_backend_https"
     nics:
       - "port-name={{item.name}}_Port-1"
-    meta: "hostname={{item.name}},network=k8s,role=kubernetes"
+    meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
   with_items: "{{workers}}"
