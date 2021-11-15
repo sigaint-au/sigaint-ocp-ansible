@@ -1,4 +1,6 @@
 ---
+
+# Kubernetes k8s
 - openstack.cloud.port:
     state: present
     name: "{{item.name}}_Port-1"
@@ -14,3 +16,22 @@
     - { name: "syd-worker-01.k8s.hahl.id.au", ip: "172.16.17.103" }
     - { name: "syd-worker-02.k8s.hahl.id.au", ip: "172.16.17.104" }
     - { name: "syd-worker-03.k8s.hahl.id.au", ip: "172.16.17.105" }
+
+# Openshift Infra Ports
+- openstack.cloud.port:
+    state: present
+    name: "{{item.name}}_Port-1"
+    network: net-hahl-k8s
+    allowed_address_pairs:
+      - ip_address: "172.16.17.96/27"
+    fixed_ips:
+      - ip_address: "{{item.ip}}"
+  with_items:
+    - { name: "master01.infra.hahl.id.au", ip: "172.16.17.106" }
+    - { name: "master02.infra.hahl.id.au", ip: "172.16.17.107" }
+    - { name: "master03.infra.hahl.id.au", ip: "172.16.17.108" }
+    - { name: "worker01.infra.hahl.id.au", ip: "172.16.17.109" }
+    - { name: "worker02.infra.hahl.id.au", ip: "172.16.17.110" }
+    - { name: "worker03.infra.hahl.id.au", ip: "172.16.17.111" }
+
+    
