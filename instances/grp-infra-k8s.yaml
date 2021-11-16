@@ -40,7 +40,7 @@
         }],
         "config": {
           "merge": [{
-            "source": "{{igntion_source}}/bootstrap.ign",
+            "source": "{{ignition_source}}/bootstrap.ign",
           }]
         }
       }
@@ -78,7 +78,7 @@
         }],
         "config": {
           "merge": [{
-            "source": "{{igntion_source}}/master.ign",
+            "source": "{{ignition_source}}/master.ign",
           }]
         }
       }
@@ -119,7 +119,7 @@
         }],
         "config": {
           "merge": [{
-            "source": "{{igntion_source}}/worker.ign",
+            "source": "{{ignition_source}}/worker.ign",
           }]
         }
       }
