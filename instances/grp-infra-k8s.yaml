@@ -30,19 +30,22 @@
     userdata: |
       {
         "ignition": {
-        "version": "3.1.0",
-        "storage": {
-        "files": [{
-          "path": "/etc/hostname",
-          "mode": 420,
-          "overwrite": true,
-          "contents": { "source": "data:,{{item.name}}" }
-        }],
-        "config": {
-          "merge": [{
-            "source": "{{ignition_source}}/bootstrap.ign",
-          }]
-        }
+          "config": {
+            "merge": [
+              {
+                "source": "{{ignition_source}}/bootstrap.ign"
+              }
+            ]
+          },
+          storage": {
+              "files": [{
+                "path": "/etc/hostname",
+                "mode": 420,
+                "overwrite": true,
+                "contents": { "source": "data:,{{item.name}}" }
+              }],
+          },
+          "version": "3.2.0"
       }
   with_items: "{{bootstrap}}"
 
@@ -68,19 +71,22 @@
     userdata: |
       {
         "ignition": {
-        "version": "3.1.0",
-        "storage": {
-        "files": [{
-          "path": "/etc/hostname",
-          "mode": 420,
-          "overwrite": true,
-          "contents": { "source": "data:,{{item.name}}" }
-        }],
-        "config": {
-          "merge": [{
-            "source": "{{ignition_source}}/master.ign",
-          }]
-        }
+          "config": {
+            "merge": [
+              {
+                "source": "{{ignition_source}}/master.ign"
+              }
+            ]
+          },
+          storage": {
+              "files": [{
+                "path": "/etc/hostname",
+                "mode": 420,
+                "overwrite": true,
+                "contents": { "source": "data:,{{item.name}}" }
+              }],
+          },
+          "version": "3.2.0"
       }
   with_items: "{{masters}}"
 
@@ -109,18 +115,22 @@
     userdata: |
       {
         "ignition": {
-        "version": "3.1.0",
-        "storage": {
-        "files": [{
-          "path": "/etc/hostname",
-          "mode": 420,
-          "overwrite": true,
-          "contents": { "source": "data:,{{item.name}}" }
-        }],
-        "config": {
-          "merge": [{
-            "source": "{{ignition_source}}/worker.ign",
-          }]
-        }
+          "config": {
+            "merge": [
+              {
+                "source": "{{ignition_source}}/worker.ign"
+              }
+            ]
+          },
+          storage": {
+              "files": [{
+                "path": "/etc/hostname",
+                "mode": 420,
+                "overwrite": true,
+                "contents": { "source": "data:,{{item.name}}" }
+              }],
+          },
+          "version": "3.2.0"
       }
+
   with_items: "{{workers}}"
