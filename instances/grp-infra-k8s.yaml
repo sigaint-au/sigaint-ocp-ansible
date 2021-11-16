@@ -1,6 +1,7 @@
 ---
 
 - set_fact:
+    ignition_source: https://hahl-infra-ignition.s3.us-west-000.backblazeb2.com/infra/
     bootstrap:
       - { name: "syd-bootstrap-01.infra.hahl.id.au" }
     masters:
@@ -26,6 +27,23 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=bootstrap"
+    userdata: |
+      {
+        "ignition": {
+        "version": "3.1.0",
+        "storage": {
+        "files": [{
+          "path": "/etc/hostname",
+          "mode": 420,
+          "overwrite": true,
+          "contents": { "source": "data:,{{item.name}}" }
+        }],
+        "config": {
+          "merge": [{
+            "source": "{{igntion_source}}/bootstrap.ign",
+          }]
+        }
+      }
   with_items: "{{bootstrap}}"
 
 - openstack.cloud.server:
@@ -47,6 +65,23 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
+    userdata: |
+      {
+        "ignition": {
+        "version": "3.1.0",
+        "storage": {
+        "files": [{
+          "path": "/etc/hostname",
+          "mode": 420,
+          "overwrite": true,
+          "contents": { "source": "data:,{{item.name}}" }
+        }],
+        "config": {
+          "merge": [{
+            "source": "{{igntion_source}}/master.ign",
+          }]
+        }
+      }
   with_items: "{{masters}}"
 
 - openstack.cloud.server:
@@ -62,7 +97,6 @@
       - "{{item.name}}_Ceph_Disk-1"
     security_groups:
       - "sg-allow_internet"
-      - "sg-role_egress_email"
       - "sg-role-prometheus"
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
@@ -72,4 +106,21 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
+    userdata: |
+      {
+        "ignition": {
+        "version": "3.1.0",
+        "storage": {
+        "files": [{
+          "path": "/etc/hostname",
+          "mode": 420,
+          "overwrite": true,
+          "contents": { "source": "data:,{{item.name}}" }
+        }],
+        "config": {
+          "merge": [{
+            "source": "{{igntion_source}}/worker.ign",
+          }]
+        }
+      }
   with_items: "{{workers}}"
