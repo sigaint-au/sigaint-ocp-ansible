@@ -1,6 +1,8 @@
 ---
 
 - set_fact:
+    bootstrap:
+      - { name: "syd-bootstrap-01.infra.hahl.id.au" }
     masters:
       - { name: "syd-master-01.infra.hahl.id.au" }
       - { name: "syd-master-02.infra.hahl.id.au" }
@@ -9,6 +11,22 @@
       - { name: "syd-worker-01.infra.hahl.id.au" }
       - { name: "syd-worker-02.infra.hahl.id.au" }
       - { name: "syd-worker-03.infra.hahl.id.au" }
+
+- openstack.cloud.server:
+    state: present
+    name: "{{item.name}}"
+    image: "rhcos-4.9.0-x86_64"
+    boot_from_volume: true
+    volume_size: 120
+    key_name: "openshift-aio"
+    auto_ip: false
+    flavor: "okd.node"
+    security_groups:
+      - "#open"
+    nics:
+      - "port-name={{item.name}}_Port-1"
+    meta: "hostname={{item.name}},network=k8s,role=bootstrap"
+  with_items: "{{bootstrap}}"
 
 - openstack.cloud.server:
     state: present
