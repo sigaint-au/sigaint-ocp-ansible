@@ -16,4 +16,4 @@
     - { name: "syd-worker-01.infra.hahl.id.au", ip: "172.16.17.103" }
     - { name: "syd-worker-02.infra.hahl.id.au", ip: "172.16.17.104" }
     - { name: "syd-worker-03.infra.hahl.id.au", ip: "172.16.17.105" }
-    - { name: "syd-bootstrap-01.infra.hahl.id.au", ip: "172.16.17.110" }
+    - { name: "syd-bootstrap-01.infra.hahl.id.au", ip: "172.16.17.126" }
