@@ -3,20 +3,26 @@
 - set_fact:
     ignition_source: https://f000.backblazeb2.com/file/hahl-infra-ignition/infra
     bootstrap:
-      - { name: "syd-bootstrap-01.infra.hahl.id.au", ignition_file: "bootstrap.json" }
+      - { name: "syd-bootstrap-01.infra.hahl.id.au", ignition_file: "bootstrap.ign" }
     masters:
-      - { name: "syd-master-01.infra.hahl.id.au", ignition_file: "master.json" }
-      - { name: "syd-master-02.infra.hahl.id.au", ignition_file: "master.json" }
-      - { name: "syd-master-03.infra.hahl.id.au", ignition_file: "master.json" }
+      - { name: "syd-master-01.infra.hahl.id.au", ignition_file: "master.ign" }
+      - { name: "syd-master-02.infra.hahl.id.au", ignition_file: "master.ign" }
+      - { name: "syd-master-03.infra.hahl.id.au", ignition_file: "master.ign" }
     workers:
-      - { name: "syd-worker-01.infra.hahl.id.au", ignition_file: "worker.json" }
-      - { name: "syd-worker-02.infra.hahl.id.au", ignition_file: "worker.json" }
-      - { name: "syd-worker-03.infra.hahl.id.au", ignition_file: "worker.json" }
+      - { name: "syd-worker-01.infra.hahl.id.au", ignition_file: "worker.ign" }
+      - { name: "syd-worker-02.infra.hahl.id.au", ignition_file: "worker.ign" }
+      - { name: "syd-worker-03.infra.hahl.id.au", ignition_file: "worker.ign" }
 
 - debug:
     msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json}}" 
   with_items: "{{bootstrap}}"
 
+
+- name: Verify ignition config.
+  pause:
+  tags:
+    - wait
+    - never
 
 - name: Check debug complete
   pause:
@@ -42,6 +48,9 @@
 
 - name: Check bootstrap complete
   pause:
+  tags:
+    - wait
+    - never
 
 - openstack.cloud.server:
     state: present
