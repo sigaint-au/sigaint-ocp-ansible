@@ -3,7 +3,7 @@
 		"config": {
 			"merge": [
 				{
-					"source": "{{ignition_source}}/{{item.igntion_file}}"
+					"source": "{{ignition_source}}/{{item.ignition_file}}"
 				}
 			]
 		},
