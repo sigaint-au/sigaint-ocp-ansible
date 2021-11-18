@@ -31,6 +31,7 @@
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.node"
+    config_drive: true
     security_groups:
       - "#open"
     nics:
@@ -48,7 +49,6 @@
     image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
     volume_size: 120
-    config_drive: True
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.node"
@@ -92,6 +92,7 @@
     image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
     volume_size: 120
+    config_drive: true
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.worker"
