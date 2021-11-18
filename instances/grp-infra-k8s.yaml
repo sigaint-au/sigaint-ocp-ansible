@@ -1,7 +1,7 @@
 ---
 
 - set_fact:
-    ignition_source: https://hahl-infra-ignition.s3.us-west-000.backblazeb2.com/infra/
+    ignition_source: https://f000.backblazeb2.com/file/hahl-infra-ignition/infra
     bootstrap:
       - { name: "syd-bootstrap-01.infra.hahl.id.au" }
     masters:
@@ -13,11 +13,20 @@
       - { name: "syd-worker-02.infra.hahl.id.au" }
       - { name: "syd-worker-03.infra.hahl.id.au" }
 
+- debug:
+    msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json}}" 
+  with_items: "{{bootstrap}}"
+
+
+- name: Check debug complete
+  pause:
+
 - openstack.cloud.server:
     state: present
     name: "{{item.name}}"
     image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
+    terminate_volume: true
     volume_size: 120
     key_name: "openshift-aio"
     auto_ip: false
@@ -27,27 +36,11 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=bootstrap"
-    userdata: |
-      {
-        "ignition": {
-          "config": {
-            "merge": [
-              {
-                "source": "{{ignition_source}}/bootstrap.ign"
-              }
-            ]
-          },
-          storage": {
-              "files": [{
-                "path": "/etc/hostname",
-                "mode": 420,
-                "overwrite": true,
-                "contents": { "source": "data:,{{item.name}}" }
-              }],
-          },
-          "version": "3.2.0"
-      }
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
   with_items: "{{bootstrap}}"
+
+- name: Check bootstrap complete
+  pause:
 
 - openstack.cloud.server:
     state: present
@@ -55,9 +48,11 @@
     image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
     volume_size: 120
+    config_drive: True
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.node"
+    config_drive: true
     security_groups:
       - "sg-allow_internet"
       - "sg-role-ssh_server"
@@ -78,15 +73,16 @@
               }
             ]
           },
-          storage": {
+          "storage": {
               "files": [{
                 "path": "/etc/hostname",
                 "mode": 420,
                 "overwrite": true,
                 "contents": { "source": "data:,{{item.name}}" }
-              }],
+              }]
           },
-          "version": "3.2.0"
+        },
+        "version": "3.2.0"
       }
   with_items: "{{masters}}"
 
@@ -99,6 +95,7 @@
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.worker"
+    config_drive: true
     volumes:
       - "{{item.name}}_Ceph_Disk-1"
     security_groups:
@@ -122,13 +119,13 @@
               }
             ]
           },
-          storage": {
+          "storage": {
               "files": [{
                 "path": "/etc/hostname",
                 "mode": 420,
                 "overwrite": true,
                 "contents": { "source": "data:,{{item.name}}" }
-              }],
+              }]
           },
           "version": "3.2.0"
       }
