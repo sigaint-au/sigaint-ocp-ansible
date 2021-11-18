@@ -3,15 +3,15 @@
 - set_fact:
     ignition_source: https://f000.backblazeb2.com/file/hahl-infra-ignition/infra
     bootstrap:
-      - { name: "syd-bootstrap-01.infra.hahl.id.au" }
+      - { name: "syd-bootstrap-01.infra.hahl.id.au", ignition_file: "bootstrap.json" }
     masters:
-      - { name: "syd-master-01.infra.hahl.id.au" }
-      - { name: "syd-master-02.infra.hahl.id.au" }
-      - { name: "syd-master-03.infra.hahl.id.au" }
+      - { name: "syd-master-01.infra.hahl.id.au", ignition_file: "master.json" }
+      - { name: "syd-master-02.infra.hahl.id.au", ignition_file: "master.json" }
+      - { name: "syd-master-03.infra.hahl.id.au", ignition_file: "master.json" }
     workers:
-      - { name: "syd-worker-01.infra.hahl.id.au" }
-      - { name: "syd-worker-02.infra.hahl.id.au" }
-      - { name: "syd-worker-03.infra.hahl.id.au" }
+      - { name: "syd-worker-01.infra.hahl.id.au", ignition_file: "worker.json" }
+      - { name: "syd-worker-02.infra.hahl.id.au", ignition_file: "worker.json" }
+      - { name: "syd-worker-03.infra.hahl.id.au", ignition_file: "worker.json" }
 
 - debug:
     msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json}}" 
@@ -48,6 +48,7 @@
     name: "{{item.name}}"
     image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
+    terminate_volume: true
     volume_size: 120
     key_name: "openshift-aio"
     auto_ip: false
@@ -63,27 +64,7 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
-    userdata: |
-      {
-        "ignition": {
-          "config": {
-            "merge": [
-              {
-                "source": "{{ignition_source}}/master.ign"
-              }
-            ]
-          },
-          "storage": {
-              "files": [{
-                "path": "/etc/hostname",
-                "mode": 420,
-                "overwrite": true,
-                "contents": { "source": "data:,{{item.name}}" }
-              }]
-          },
-        },
-        "version": "3.2.0"
-      }
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
   with_items: "{{masters}}"
 
 - openstack.cloud.server:
@@ -91,12 +72,11 @@
     name: "{{item.name}}"
     image: "rhcos-4.9.0-x86_64"
     boot_from_volume: true
+    terminate_volume: true
     volume_size: 120
-    config_drive: true
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.worker"
-    config_drive: true
     volumes:
       - "{{item.name}}_Ceph_Disk-1"
     security_groups:
@@ -110,25 +90,6 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
-    userdata: |
-      {
-        "ignition": {
-          "config": {
-            "merge": [
-              {
-                "source": "{{ignition_source}}/worker.ign"
-              }
-            ]
-          },
-          "storage": {
-              "files": [{
-                "path": "/etc/hostname",
-                "mode": 420,
-                "overwrite": true,
-                "contents": { "source": "data:,{{item.name}}" }
-              }]
-          },
-          "version": "3.2.0"
-      }
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
 
   with_items: "{{workers}}"

@@ -9,11 +9,34 @@
       - ip_address: "172.16.17.96/27"
     fixed_ips:
       - ip_address: "{{item.ip}}"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-k8s_master"
+      - "sg-role-apps_lb_backend_https"
+      - "sg-role-k8s_client"
   with_items:
     - { name: "syd-master-01.infra.hahl.id.au", ip: "172.16.17.100" }
     - { name: "syd-master-02.infra.hahl.id.au", ip: "172.16.17.101" }
     - { name: "syd-master-03.infra.hahl.id.au", ip: "172.16.17.102" }
+    - { name: "syd-bootstrap-01.infra.hahl.id.au", ip: "172.16.17.126" }
+
+- openstack.cloud.port:
+    state: present
+    name: "{{item.name}}_Port-1"
+    network: net-hahl-k8s
+    allowed_address_pairs:
+      - ip_address: "172.16.17.96/27"
+    fixed_ips:
+      - ip_address: "{{item.ip}}"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-apps_lb_backend_https"
+      - "sg-role-k8s_client"
+  with_items:
     - { name: "syd-worker-01.infra.hahl.id.au", ip: "172.16.17.103" }
     - { name: "syd-worker-02.infra.hahl.id.au", ip: "172.16.17.104" }
     - { name: "syd-worker-03.infra.hahl.id.au", ip: "172.16.17.105" }
-    - { name: "syd-bootstrap-01.infra.hahl.id.au", ip: "172.16.17.126" }

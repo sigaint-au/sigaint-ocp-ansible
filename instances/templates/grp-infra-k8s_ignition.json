@@ -3,7 +3,19 @@
 		"config": {
 			"merge": [
 				{
-					"source": "{{ignition_source}}/bootstrap.ign"
+					"source": "{{ignition_source}}/{{item.igntion_file}}"
+				}
+			]
+		},
+		"storage": {
+			"files": [
+				{
+					"path": "/etc/hostname",
+					"mode": 420,
+					"overwrite": true,
+					"contents": {
+						"source": "data:,{{item.name}}"
+					}
 				}
 			]
 		},
