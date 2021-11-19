@@ -14,7 +14,7 @@
       - { name: "syd-worker-03.infra.hahl.id.au", ignition_file: "worker.ign" }
 
 - debug:
-    msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json}}" 
+    msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}" 
   with_items: "{{bootstrap}}"
 
 
@@ -40,7 +40,7 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=bootstrap"
-    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}"
   with_items: "{{bootstrap}}"
 
 - name: Check bootstrap complete
@@ -70,7 +70,7 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
-    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json')}}"
   with_items: "{{masters}}"
 
 - name: Verify master provisioned config.
@@ -102,6 +102,6 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
-    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}"
 
   with_items: "{{workers}}"
