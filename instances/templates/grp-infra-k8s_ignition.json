@@ -16,7 +16,7 @@
 		  "mode": 420,
 		  "overwrite": true,
 		  "contents": {
-			"source": "data:,{{iten.name}}"
+			"source": "data:,{{item.name}}"
 		  }
 		}
 	  ]
