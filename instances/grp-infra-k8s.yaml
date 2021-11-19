@@ -41,8 +41,6 @@
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.node"
-    security_groups:
-      - "#open"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=bootstrap"
