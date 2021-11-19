@@ -17,6 +17,13 @@
     msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}" 
   with_items: "{{bootstrap}}"
 
+- debug:
+    msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}" 
+  with_items: "{{masters}}"
+
+- debug:
+    msg: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}" 
+  with_items: "{{workers}}"
 
 - name: Verify ignition config.
   pause:
@@ -61,7 +68,7 @@
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
-    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json')}}"
+    userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}"
   with_items: "{{masters}}"
 
 - name: Verify master provisioned config.
@@ -86,5 +93,4 @@
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
     userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') }}"
-
   with_items: "{{workers}}"
