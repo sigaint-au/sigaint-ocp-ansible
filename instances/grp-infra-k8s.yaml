@@ -24,9 +24,6 @@
     - wait
     - never
 
-- name: Check debug complete
-  pause:
-
 - openstack.cloud.server:
     state: present
     name: "{{item.name}}"
@@ -75,6 +72,12 @@
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
     userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
   with_items: "{{masters}}"
+
+- name: Verify master provisioned config.
+  pause:
+  tags:
+    - wait
+    - never
 
 - openstack.cloud.server:
     state: present
