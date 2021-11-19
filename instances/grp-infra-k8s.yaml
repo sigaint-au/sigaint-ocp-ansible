@@ -34,7 +34,6 @@
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.node"
-    config_drive: true
     security_groups:
       - "#open"
     nics:
@@ -59,14 +58,6 @@
     key_name: "openshift-aio"
     auto_ip: false
     flavor: "okd.node"
-    config_drive: true
-    security_groups:
-      - "sg-allow_internet"
-      - "sg-role-ssh_server"
-      - "sg-role-idm_client"
-      - "sg-role-k8s_master"
-      - "sg-role-apps_lb_backend_https"
-      - "sg-role-k8s_client"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
@@ -91,14 +82,6 @@
     flavor: "okd.worker"
     volumes:
       - "{{item.name}}_Ceph_Disk-1"
-    security_groups:
-      - "sg-allow_internet"
-      - "sg-role-prometheus"
-      - "sg-role-ssh_server"
-      - "sg-role-idm_client"
-      - "sg-role-k8s_worker"
-      - "sg-role-k8s_client"
-      - "sg-role-apps_lb_backend_https"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
