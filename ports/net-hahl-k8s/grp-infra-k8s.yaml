@@ -35,6 +35,7 @@
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
       - "sg-role-apps_lb_backend_https"
+      - "sg-role-k8s_worker"
       - "sg-role-k8s_client"
   with_items:
     - { name: "syd-worker-01.infra.hahl.id.au", ip: "172.16.17.103" }
