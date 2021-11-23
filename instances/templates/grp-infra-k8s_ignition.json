@@ -5,6 +5,9 @@
 		"merge": [
 		  {
 			"source": "{{ignition_source}}/{{item.ignition_file}}"
+		  },
+		  {
+			"source": "{{ignition_source}}/bundle.ign"
 		  }
 		]
 	  }
