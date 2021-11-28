@@ -1,7 +1,7 @@
 ---
 
 - set_fact:
-    ignition_source: https://f000.backblazeb2.com/file/hahl-infra-ignition/infra
+    ignition_source: https://s3.hahl.id.au/file/hahl-infra-ignition/infra
     bootstrap:
       - { name: "syd-bootstrap-01.infra.hahl.id.au", ignition_file: "bootstrap.ign" }
     masters:
