@@ -29,7 +29,6 @@
   pause:
   tags:
     - wait
-    - never
 
 - openstack.cloud.server:
     state: present
@@ -45,13 +44,20 @@
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=bootstrap"
     userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-k8s_master"
+      - "sg-role-apps_lb_backend_https"
+      - "sg-role-k8s_client"
+
   with_items: "{{bootstrap}}"
 
 - name: Check bootstrap complete
   pause:
   tags:
     - wait
-    - never
 
 - openstack.cloud.server:
     state: present
@@ -67,13 +73,19 @@
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=k8s,role=kubernetes"
     userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-k8s_master"
+      - "sg-role-apps_lb_backend_https"
+      - "sg-role-k8s_client"
   with_items: "{{masters}}"
 
 - name: Verify master provisioned config.
   pause:
   tags:
     - wait
-    - never
 
 - openstack.cloud.server:
     state: present
@@ -91,4 +103,11 @@
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=infra-k8s,role=kubernetes"
     userdata: "{{ lookup('template', 'templates/grp-infra-k8s_ignition.json') | to_json }}"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+      - "sg-role-apps_lb_backend_https"
+      - "sg-role-k8s_worker"
+      - "sg-role-k8s_client"
   with_items: "{{workers}}"

@@ -2,7 +2,7 @@
 -  openstack.cloud.server:
     state: present
     name: syd-lb-01.apps.hahl.id.au
-    image: "{{default_image}}"
+    image: "Red Hat Enterprise Linux 8.2 (Ootpa)"
     boot_from_volume: true
     volume_size: 25
     key_name: "{{default_keypair}}"

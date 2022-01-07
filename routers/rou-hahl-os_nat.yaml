@@ -1,0 +1,10 @@
+---
+- name: "router rou-hahl-os_nat" 
+  openstack.cloud.router:
+    state: present
+    name: rou-hahl-os_nat
+    network: net-vlan_1301-os_nat
+    interfaces:
+      - net: net-hahl-os_nat
+        subnet: 10.16.0.0/24
+        portip: 10.16.0.1

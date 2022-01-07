@@ -8,6 +8,10 @@
       - 149.112.112.112
 
     networks:
+
+      - name: net-hahl-os_nat
+        subnet: 10.16.0.0/24
+
       - name:   net-hahl-vpn
         subnet: 172.16.17.32/27
 
@@ -30,7 +34,7 @@
     state: present
     name: "{{item.name}}"
     mtu_size: 1500
-    dns_domain: "hahl.id.au"
+    dns_domain: "{{item.dns | default('hahl.id.au')}}"
   with_items: "{{networks}}"
 
 - openstack.cloud.subnet:

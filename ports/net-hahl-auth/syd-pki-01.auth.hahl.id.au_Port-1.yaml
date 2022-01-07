@@ -1,0 +1,9 @@
+---
+
+- name: "ports | syd-pki-01.auth.hahl.id.au" 
+  openstack.cloud.port:
+    state: present
+    name: syd-pki-01.auth.hahl.id.au_Port-1
+    network: net-hahl-auth
+    fixed_ips:
+      - ip_address: "172.16.17.4"

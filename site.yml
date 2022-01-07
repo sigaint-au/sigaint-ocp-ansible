@@ -3,18 +3,21 @@
   tasks:
 
     - include_vars: "config/defaults.yaml"
+      tags:
+        - always
 
     ##
     # == Create security groups routers and networks.
     #
 
     - block:
-        - include_tasks: "networks/net-hahl.yaml"
+        - import_tasks: "networks/net-hahl.yaml"
       tags:
         - "networks"
 
     - block:
-        - include_tasks: "routers/rou-hahl-ext.yaml"
+        - import_tasks: "routers/rou-hahl-ext.yaml"
+        - import_tasks: "routers/rou-hahl-os_nat.yaml"
       tags:
         - "routers"
 
@@ -23,54 +26,60 @@
     #
     - block:
         # Default internet access
-        - include_tasks: "security_groups/sg-allow_internet.yaml"
-        - include_tasks: "security_groups/sg-allow_all.yaml"
-        - include_tasks: "security_groups/sg-role-egress_email.yaml"
+        - import_tasks: "security_groups/sg-allow_internet.yaml"
+        - import_tasks: "security_groups/sg-allow_all.yaml"
+        - import_tasks: "security_groups/sg-role-egress_email.yaml"
 
         # SSH Access
-        - include_tasks: "security_groups/sg-role-ssh_client.yaml"
-        - include_tasks: "security_groups/sg-role-ssh_server.yaml"
+        - import_tasks: "security_groups/sg-role-ssh_client.yaml"
+        - import_tasks: "security_groups/sg-role-ssh_server.yaml"
 
         # IdM Client and server
-        - include_tasks: "security_groups/sg-role-idm_client.yaml"
-        - include_tasks: "security_groups/sg-role-idm_server.yaml"
+        - import_tasks: "security_groups/sg-role-idm_client.yaml"
+        - import_tasks: "security_groups/sg-role-idm_server.yaml"
 
         # Load Balancer Security Groups
-        - include_tasks: "security_groups/sg-role-apps_lb.yaml"
-        - include_tasks: "security_groups/sg-role-apps_lb_backend_https.yaml"
-        - include_tasks: "security_groups/sg-role-apps_lb_backend_mc.yaml"
+        - import_tasks: "security_groups/sg-role-apps_lb.yaml"
+        - import_tasks: "security_groups/sg-role-apps_lb_backend_https.yaml"
+        - import_tasks: "security_groups/sg-role-apps_lb_backend_mc.yaml"
 
         # Kubernetes
-        - include_tasks: "security_groups/sg-role-k8s_client.yaml"
-        - include_tasks: "security_groups/sg-role-k8s_worker.yaml"
-        - include_tasks: "security_groups/sg-role-k8s_master.yaml"
+        - import_tasks: "security_groups/sg-role-k8s_client.yaml"
+        - import_tasks: "security_groups/sg-role-k8s_worker.yaml"
+        - import_tasks: "security_groups/sg-role-k8s_master.yaml"
         
         # Prometheus
-        - include_tasks: "security_groups/sg-role-prometheus.yaml"
-        - include_tasks: "security_groups/sg-role-node_exporter.yaml"
+        - import_tasks: "security_groups/sg-role-prometheus.yaml"
+        - import_tasks: "security_groups/sg-role-node_exporter.yaml"
       tags:
         - "security_groups"
 
     # Ports
     - block:
-        - include_tasks: "ports/net-hahl-k8s/grp-infra-k8s.yaml"
-        - include_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
-        - include_tasks: "ports/net-hahl-apps/syd-mc-01.apps.hahl.id.au_Port-1.yaml"
-        - include_tasks: "ports/net-hahl-apps/syd-matrix-01.apps.hahl.id.au_Port-1.yaml"
+        - import_tasks: "ports/net-hahl-k8s/grp-infra-k8s.yaml"
+        - import_tasks: "ports/net-hahl-apps/grp-apps-lb.yaml"
+        - import_tasks: "ports/net-hahl-apps/syd-mc-01.apps.hahl.id.au_Port-1.yaml"
+        - import_tasks: "ports/net-hahl-apps/syd-matrix-01.apps.hahl.id.au_Port-1.yaml"
+        - import_tasks: "ports/net-hahl-auth/syd-pki-01.auth.hahl.id.au_Port-1.yaml"
       tags:
         - "ports"
 
     # Volumes
     - block:
-        - include_tasks: "volumes/grp-infra-k8s.yaml"
+        - import_tasks: "volumes/grp-infra-k8s.yaml"
       tags:
         - "volumes"
 
+    - import_tasks: "instances/grp-infra-k8s.yaml"
+      tags:
+        - never
+        - danger
+
     # Instances
     - block:
-        - include_tasks: "instances/grp-infra-k8s.yaml"
-        - include_tasks: "instances/grp-apps-lb.yaml"
-        - include_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
-        - include_tasks: "instances/syd-matrix-01.apps.hahl.id.au.yaml"
+        - import_tasks: "instances/grp-apps-lb.yaml"
+        - import_tasks: "instances/syd-mc-01.apps.hahl.id.au.yaml"
+        - import_tasks: "instances/syd-matrix-01.apps.hahl.id.au.yaml"
+        - import_tasks: "instances/syd-pki-01.auth.hahl.id.au.yaml"
       tags:
         - "instances"
