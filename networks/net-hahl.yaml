@@ -12,7 +12,7 @@
       - name: net-hahl-os_nat
         subnet: 10.16.0.0/24
 
-      - name:   net-hahl-vpn
+      - name:   net-hahl-dmz
         subnet: 172.16.17.32/27
 
       - name:   net-hahl-vdi   

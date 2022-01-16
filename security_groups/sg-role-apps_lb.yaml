@@ -20,6 +20,9 @@
           - { direction: "ingress", protocol: tcp, port: 443,  remote_ip_prefix: "0.0.0.0/0",  description: "All HTTPS" }
           - { direction: "egress",  protocol: tcp, port: 443,  remote_group: "sg-role-apps_lb_backend_https",  description: "All HTTP"  }
 
+          # Incomming 2222 for Gitea
+          - { direction: "ingress", protocol: tcp, port: 2222,  remote_ip_prefix: "0.0.0.0/0",  description: "All SSH/Alt for Gitea" }
+
           # Kubernetes API 
           - { direction: "ingress",  protocol: tcp, port: 6443,  remote_ip_prefix: "0.0.0.0/0",       description: "k8s-api" }
           - { direction: "ingress",  protocol: tcp, port: 6443,  remote_group: "sg-role-k8s_worker",  description: "k8s-api" }
@@ -35,6 +38,9 @@
 
           - { direction: "egress",   protocol: tcp, port: 22623, remote_group: "sg-role-k8s_master",  description: "ocp-machineconfig" }
           - { direction: "egress",   protocol: tcp, port: 22623, remote_group: "sg-role-k8s_worker",  description: "ocp-machineconfig" }
+
+          - { direction: "ingress", protocol: tcp, port_range_min: 30000, port_range_max: 32767, remote_group: "sg-role-k8s_worker",  description: "ocp-nodeport" }
+          - { direction: "egress",  protocol: tcp, port_range_min: 30000, port_range_max: 32767, remote_group: "sg-role-k8s_worker",  description: "ocp-nodeport" }
 
           # Minecraft
           - { direction: "ingress", protocol: tcp, port: 25565,  remote_ip_prefix: "0.0.0.0/0",  description: "Minecraft" }

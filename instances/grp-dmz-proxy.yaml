@@ -1,0 +1,20 @@
+---
+- openstack.cloud.server:
+    state: present
+    name: "{{item.name}}"
+    image: "Red Hat Enterprise Linux 8.5 (Ootpa)"
+    boot_from_volume: true
+    volume_size: 25
+    key_name: "{{default_keypair}}"
+    auto_ip: false
+    flavor: "g.small"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+    nics:
+      - "port-name={{item.name}}_Port-1"
+    meta: "hostname={{item.name}},network=dmz,role=Proxy"
+  with_items:
+    - { name: "syd-proxy-01.dmz.hahl.id.au" }
+    - { name: "syd-proxy-02.dmz.hahl.id.au" }
