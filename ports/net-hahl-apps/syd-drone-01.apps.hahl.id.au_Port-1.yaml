@@ -1,0 +1,11 @@
+---
+- openstack.cloud.port:
+    state: present
+    name: syd-drone-01.apps.hahl.id.au_Port-1
+    network: net-hahl-apps
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-idm_client"
+    fixed_ips:
+      - ip_address: "172.16.17.167"

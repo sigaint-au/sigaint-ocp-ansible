@@ -37,6 +37,7 @@
       - "sg-role-apps_lb_backend_https"
       - "sg-role-k8s_worker"
       - "sg-role-k8s_client"
+      - "sg-role-egress_email"
   with_items:
     - { name: "syd-worker-01.infra.hahl.id.au", ip: "172.16.17.103" }
     - { name: "syd-worker-02.infra.hahl.id.au", ip: "172.16.17.104" }

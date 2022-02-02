@@ -1,0 +1,18 @@
+---
+-  openstack.cloud.server:
+    state: present
+    name: syd-drone-01.apps.hahl.id.au
+    image: "VZLinux 8.4"
+    boot_from_volume: true
+    volume_size: 100
+    key_name: "{{default_keypair}}"
+    auto_ip: false
+    flavor: "g2.medium"
+    security_groups:
+      - "sg-allow_internet"
+      - "sg-role-ssh_server"
+      - "sg-role-ssh_client"
+      - "sg-role-idm_client"
+    nics:
+      - "port-name=syd-drone-01.apps.hahl.id.au_Port-1"
+    meta: "hostname=syd-drone-01.hahl.id.au,network=apps,role=drone-runner"

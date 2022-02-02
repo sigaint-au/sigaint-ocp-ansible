@@ -110,4 +110,5 @@
       - "sg-role-apps_lb_backend_https"
       - "sg-role-k8s_worker"
       - "sg-role-k8s_client"
+      - "sg-role-egress_email"
   with_items: "{{workers}}"
