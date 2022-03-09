@@ -25,6 +25,10 @@
     # == Create resources for Applications
     #
     - block:
+        # Proxy
+        - import_tasks: "security_groups/sg-role-proxy_server.yaml"
+        - import_tasks: "security_groups/sg-role-proxy_client.yaml"
+
         # Default internet access
         - import_tasks: "security_groups/sg-allow_internet.yaml"
         - import_tasks: "security_groups/sg-allow_all.yaml"
@@ -51,10 +55,6 @@
         # Prometheus
         - import_tasks: "security_groups/sg-role-prometheus.yaml"
         - import_tasks: "security_groups/sg-role-node_exporter.yaml"
-
-        # Proxy
-        - import_tasks: "security_groups/sg-role-proxy_server.yaml"
-        - import_tasks: "security_groups/sg-role-proxy_client.yaml"
 
 
       tags:

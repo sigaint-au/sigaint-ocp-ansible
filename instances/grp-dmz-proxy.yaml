@@ -2,16 +2,17 @@
 - openstack.cloud.server:
     state: present
     name: "{{item.name}}"
-    image: "Red Hat Enterprise Linux 8.5 (Ootpa)"
+    image: "hahl-server-production"
     boot_from_volume: true
     volume_size: 25
-    key_name: "{{default_keypair}}"
+    key_name: "Automation_080322"
     auto_ip: false
-    flavor: "g.small"
+    flavor: "g2.small"
     security_groups:
       - "sg-allow_internet"
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
+      - "sg-role-proxy_server"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=dmz,role=Proxy"

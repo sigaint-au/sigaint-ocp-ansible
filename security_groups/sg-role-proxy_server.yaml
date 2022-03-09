@@ -21,6 +21,9 @@
           - { direction: "ingress", protocol: udp, port: "123", remote_group: "sg-role-proxy_client" }
           - { direction: "egress",  protocol: udp, port: "123", remote_group: "sg-role-proxy_client" }
 
+          # Keepalived VRRP / HAProxy Stats
+          - { direction: "ingress", protocol: 112, remote_group: "sg-role-proxy_server", description: "VRRP" }
+
 - openstack.cloud.security_group:
     state: present
     name: "{{item.name}}"
