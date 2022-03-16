@@ -13,6 +13,7 @@
       - "sg-role-ssh_server"
       - "sg-role-idm_client"
       - "sg-role-proxy_server"
+      - "sg-role-k8s_client"
     nics:
       - "port-name={{item.name}}_Port-1"
     meta: "hostname={{item.name}},network=dmz,role=Proxy"
